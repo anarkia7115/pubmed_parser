@@ -173,3 +173,7 @@ tramp
 _site/
 .sass-cache/
 .jekyll-metadata
+
+data
+config.ini
+venv
