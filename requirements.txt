@@ -1,3 +1,6 @@
 lxml
 unidecode
 requests
+twisted
+six
+boto3
