@@ -1,7 +1,7 @@
 import re
 from itertools import chain
 from collections import defaultdict
-from pubmed_parser.utils import read_xml, stringify_children, month_or_day_formater
+from pubmed_parser.utils import read_xml, read_xml_string, read_xml_stream, stringify_children, month_or_day_formater
 
 __all__ = [
     'parse_medline_xml',
@@ -354,13 +354,13 @@ def parse_article_info(medline, year_info_only, nlm_category):
     return dict_out
 
 
-def parse_medline_xml(path, year_info_only=True, nlm_category=False):
+def parse_medline_xml(path, year_info_only=True, nlm_category=False, is_string=False):
     """Parse XML file from Medline XML format available at
     ftp://ftp.nlm.nih.gov/nlmdata/.medleasebaseline/gz/
 
     Parameters
     ----------
-    path: str
+    path:
         The path
     year_info_only: bool
         if True, this tool will only attempt to extract year information from PubDate.
@@ -383,7 +383,11 @@ def parse_medline_xml(path, year_info_only=True, nlm_category=False):
         `parse_article_info`). Articles that have been deleted will be
         added with no information other than the field `delete` being `True`
     """
-    tree = read_xml(path)
+    if is_string:
+        input_string = path
+        tree = read_xml_string(input_string)
+    else:
+        tree = read_xml(path)
     medline_citations = tree.findall('//MedlineCitationSet/MedlineCitation')
     if len(medline_citations) == 0:
         medline_citations = tree.findall('//MedlineCitation')

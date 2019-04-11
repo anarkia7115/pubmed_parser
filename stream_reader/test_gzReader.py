@@ -48,4 +48,7 @@ class TestGzReader(TestCase):
             else:
                 print("{}: {}".format(line_num, content))
 
+        pubmed_lines = list(self.gz_reader.read_obs_line(one_pubmed_gz_obs))
+        print("num of pubmeds: [{}]".format(len(pubmed_lines)))
+
         # self.fail()

@@ -14,7 +14,7 @@ class ObsReader(object):
             aws_secret_access_key=config['OBS']['sk'],
             endpoint_url=config['OBS']['endpoint'],
         )
-        self.bucket = 'gcbinlp'
+        self.bucket = config['OBS']['bucket']
 
     def read_chunk(self, obs_key, chunk_size):
         obj = self.s3_client.get_object(

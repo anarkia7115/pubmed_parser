@@ -1,6 +1,9 @@
 import gzip
 from gzip import GzipFile
 
+import logging
+logging.basicConfig(level=logging.INFO)
+
 
 class GzReader(object):
 
@@ -20,7 +23,17 @@ class GzReader(object):
         return gzip.decompress(data)
 
     @staticmethod
+    def read_obs_stream(obs_key):
+        from stream_reader.obs_reader import ObsReader
+        obs_reader = ObsReader()
+        data = obs_reader.read_obj(obs_key)
+        with GzipFile(fileobj=data) as obs_stream:
+            return obs_stream
+
+    @staticmethod
     def read_obs_line(obs_key):
+
+        logging.info("start download {} from obs".format(obs_key))
         from stream_reader.obs_reader import ObsReader
         obs_reader = ObsReader()
         data = obs_reader.read_obj(obs_key)
