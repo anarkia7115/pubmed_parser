@@ -1,7 +1,6 @@
 import configparser
 from pubmed_parser import medline_parser
 from stream_reader.gz_reader import GzReader
-import json
 
 import logging
 logging.basicConfig(level=logging.INFO)
@@ -27,4 +26,4 @@ class PubmedRowParser(object):
         )
         logging.info("xml string parsed")
 
-        return [json.dumps(row) for row in pubmed_rows]
+        return pubmed_rows
