@@ -73,12 +73,15 @@ def parse_article_meta(tree):
     return dict_article_meta
 
 
-def parse_pubmed_xml(path, include_path=False, nxml=False):
+def parse_pubmed_xml(path, include_path=False, nxml=False, is_stream=False):
     """
     Given single xml path, extract information from xml file
     and return parsed xml file in dictionary format.
     """
-    tree = read_xml(path, nxml)
+    if not is_stream:
+        tree = read_xml(path, nxml)
+    else:
+        tree = read_xml_stream(path)
 
     tree_title = tree.find('.//title-group/article-title')
     if tree_title is not None:

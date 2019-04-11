@@ -36,6 +36,19 @@ def read_xml(path, nxml=False):
     return tree
 
 
+def read_xml_stream(input_stream):
+    """
+    Parse tree from given XML path
+    """
+    try:
+        tree = etree.fromstringlist(input_stream)
+    except Exception as e:
+        print("Error: it was not able to read a path, a file-like object, or a string as an XML")
+        raise
+
+    return tree
+
+
 def stringify_children(node):
     """
     Filters and removes possible Nones in texts and tails
