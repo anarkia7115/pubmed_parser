@@ -5,7 +5,7 @@ MAINTAINER Gao JiaXiang "gaojxcs@gmail.com"
 RUN yum update -y && yum clean all
 
 RUN yum -y install epel-release && yum clean all
-RUN yum -y install python-pip python-devel && yum clean all
+RUN yum -y install python3-pip python3-devel && yum clean all
 RUN yum -y install python3 gcc && yum clean all
 
 
@@ -18,7 +18,7 @@ RUN pip install -r requirements.txt
 
 COPY . /pubmed_parser
 
-ENTRYPOINT [ "python" ]
+ENTRYPOINT [ "python3" ]
 
-CMD [ "server/flask_server.py" ]
+CMD [ "-m", "server.flask_server" ]
 
