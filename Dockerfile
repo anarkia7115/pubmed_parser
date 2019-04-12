@@ -20,5 +20,5 @@ COPY . /pubmed_parser
 
 ENTRYPOINT [ "python" ]
 
-CMD [ "server/flask_server" ]
+CMD [ "server/flask_server.py" ]
 
