@@ -1,4 +1,4 @@
-FROM centos
+FROM python:3.7
 
 MAINTAINER Gao JiaXiang "gaojxcs@gmail.com"
 
@@ -6,10 +6,6 @@ RUN yum update -y && yum clean all
 
 RUN yum -y install epel-release && yum clean all
 RUN yum -y install \
-    python36u \
-    python36u-libs \
-    python36u-devel \
-    python36u-pip \
     gcc \
     && yum clean all
 
