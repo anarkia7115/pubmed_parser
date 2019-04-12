@@ -6,6 +6,7 @@ RUN yum update -y && yum clean all
 
 RUN yum -y install epel-release && yum clean all
 RUN yum -y install python-pip python-devel && yum clean all
+RUN yum -y install python3 gcc && yum clean all
 
 
 # We copy just the requirements.txt first to leverage Docker cache
