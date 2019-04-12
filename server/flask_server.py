@@ -7,9 +7,28 @@ import requests
 app = Flask(__name__)
 
 
+@app.route("/")
+def index_page():
+    example_str = """
+    Example:
+    
+    curl --header "Content-Type: application/json" \
+      --request POST \
+      --data '{ "path": "pubmed_baseline/pubmed19n0971.xml.gz", "limit": 10 }' \
+      http://localhost:5000/parse_pubmed
+    """
+
+    return example_str
+
+
 @app.route("/parse_pubmed", methods=["POST"])
 def parse_pubmed():
     """
+    curl --header "Content-Type: application/json" \
+      --request POST \
+      --data '{ "path": "pubmed_baseline/pubmed19n0971.xml.gz", "limit": 10 }' \
+      http://localhost:5000/parse_pubmed
+
     1. read json, get obs path
     2. use read_obs_line to read gz stream
     3. parse stream to pubmed parser
@@ -34,3 +53,6 @@ def parse_pubmed():
                 break
             requests.post(callback, data=json.dumps(row))
 
+
+if __name__ == "__main__":
+    app.run(debug=True, host='0.0.0.0')
