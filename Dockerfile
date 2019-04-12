@@ -2,8 +2,7 @@ FROM python:3.7
 
 MAINTAINER Gao JiaXiang "gaojxcs@gmail.com"
 
-RUN apt-get update && apt-get install -y \
-    gcc
+# RUN apt-get update && apt-get install -y \
 
 # We copy just the requirements.txt first to leverage Docker cache
 COPY ./requirements.txt /pubmed_parser/requirements.txt
