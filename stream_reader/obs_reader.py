@@ -6,12 +6,12 @@ config.read("config.ini")
 
 
 class ObsReader(object):
-    def __init__(self):
+    def __init__(self, ak, sk):
 
         self.s3_client = boto3.client(
             service_name='s3',
-            aws_access_key_id=config['OBS']['ak'],
-            aws_secret_access_key=config['OBS']['sk'],
+            aws_access_key_id=ak,
+            aws_secret_access_key=sk,
             endpoint_url=config['OBS']['endpoint'],
         )
         self.bucket = config['OBS']['bucket']

@@ -36,12 +36,14 @@ def parse_pubmed():
     :return:
     """
     pubmed_path = request.get_json()['path']
+    ak = request.get_json()['ak']
+    sk = request.get_json()['sk']
     callback = request.get_json().get('callback')
     size_limit = request.get_json().get('limit', -1)
 
-    pr_writer = PubmedRowParser()
+    pr_parser = PubmedRowParser()
 
-    pubmed_rows = pr_writer.parse(pubmed_path)
+    pubmed_rows = pr_parser.parse(pubmed_path, ak, sk)
     if callback is None:
         if size_limit != -1:
             return json.dumps(pubmed_rows[:size_limit])

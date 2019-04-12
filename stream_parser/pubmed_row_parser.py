@@ -12,10 +12,10 @@ config.read("config.ini")
 class PubmedRowParser(object):
 
     @staticmethod
-    def parse(obs_key):
+    def parse(obs_key, ak, sk):
         gz_reader = GzReader()
 
-        xml_rows = gz_reader.read_obs_line(obs_key)
+        xml_rows = gz_reader.read_obs_line(obs_key, ak, sk)
         xml_string = b"".join(xml_rows)
         logging.info("xml string downloaded")
 

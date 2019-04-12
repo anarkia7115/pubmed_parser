@@ -23,19 +23,19 @@ class GzReader(object):
         return gzip.decompress(data)
 
     @staticmethod
-    def read_obs_stream(obs_key):
+    def read_obs_stream(obs_key, ak, sk):
         from stream_reader.obs_reader import ObsReader
-        obs_reader = ObsReader()
+        obs_reader = ObsReader(ak, sk)
         data = obs_reader.read_obj(obs_key)
         with GzipFile(fileobj=data) as obs_stream:
             return obs_stream
 
     @staticmethod
-    def read_obs_line(obs_key):
+    def read_obs_line(obs_key, ak, sk):
 
         logging.info("start download {} from obs".format(obs_key))
         from stream_reader.obs_reader import ObsReader
-        obs_reader = ObsReader()
+        obs_reader = ObsReader(ak, sk)
         data = obs_reader.read_obj(obs_key)
         with GzipFile(fileobj=data) as f:
             for content in f:
