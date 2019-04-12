@@ -1,6 +1,6 @@
 FROM centos
 
-MAINTANER Gao JiaXiang "gaojxcs@gmail.com"
+MAINTAINER Gao JiaXiang "gaojxcs@gmail.com"
 
 RUN yum update -y && \
     yum install -y python-pip python-devel
