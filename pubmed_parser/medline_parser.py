@@ -2,6 +2,8 @@ import re
 from itertools import chain
 from collections import defaultdict
 from pubmed_parser.utils import read_xml, read_xml_string, read_xml_stream, stringify_children, month_or_day_formater
+import logging
+logging.basicConfig(level=logging.INFO)
 
 __all__ = [
     'parse_medline_xml',
@@ -383,15 +385,21 @@ def parse_medline_xml(path, year_info_only=True, nlm_category=False, is_string=F
         `parse_article_info`). Articles that have been deleted will be
         added with no information other than the field `delete` being `True`
     """
+    logging.info("Parsing xml into Tree")
     if is_string:
+        logging.info("Input Pubmed is a string.")
         input_string = path
         tree = read_xml_string(input_string)
     else:
         tree = read_xml(path)
+
+    logging.info("Find all Articles")
     medline_citations = tree.findall('//MedlineCitationSet/MedlineCitation')
     if len(medline_citations) == 0:
         medline_citations = tree.findall('//MedlineCitation')
+
     article_list = list(map(lambda m: parse_article_info(m, year_info_only, nlm_category), medline_citations))
+    logging.info("Find all delete citations")
     delete_citations = tree.findall('//DeleteCitation/PMID')
     dict_delete = \
         [
