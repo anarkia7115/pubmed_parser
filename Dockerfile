@@ -9,7 +9,7 @@ COPY ./requirements.txt /pubmed_parser/requirements.txt
 
 WORKDIR /pubmed_parser
 
-RUN pip install -r requirements.txt
+RUN pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt
 
 COPY . /pubmed_parser
 
