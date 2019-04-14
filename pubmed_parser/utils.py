@@ -52,13 +52,18 @@ def read_xml_stream(input_stream):
     return tree
 
 
-def read_xml_string(input_stream):
+def read_xml_string(input_string):
     """
     Parse tree from given XML path
     """
     try:
         logging.info("start parsing xml string")
-        tree = etree.parse(BytesIO(input_stream))
+        logging.info("transforming string into bytes io")
+        logging.info("type of input_string: {}".format(type(input_string)))
+        bytesio_input_string = BytesIO(input_string)
+        logging.info("string transformed into bytes")
+        logging.info("parsing bytesio")
+        tree = etree.parse(bytesio_input_string)
         logging.info("input stream parsed")
     except Exception as e:
         logging.info("error during parsing xml string")
