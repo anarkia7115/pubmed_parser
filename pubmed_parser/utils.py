@@ -5,6 +5,8 @@ from time import strptime
 from six import string_types
 from lxml import etree
 from itertools import chain
+import logging
+logging.basicConfig(level=logging.INFO)
 
 
 def remove_namespace(tree):
@@ -55,8 +57,11 @@ def read_xml_string(input_stream):
     Parse tree from given XML path
     """
     try:
+        logging.info("start parsing xml string")
         tree = etree.parse(BytesIO(input_stream))
+        logging.info("input stream parsed")
     except Exception as e:
+        logging.info("error during parsing xml string")
         print("Error: it was not able to read a path, a file-like object, or a string as an XML")
         raise
 
