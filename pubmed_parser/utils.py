@@ -68,6 +68,7 @@ def read_xml_string(input_string):
         tree = etree.parse(bytes_io_input_string)
         logging.info("input stream parsed")
     except Exception as e:
+        logging.info("got an exception")
         logging.info("error during parsing xml string")
         print("Error: it was not able to read a path, a file-like object, or a string as an XML")
         raise
