@@ -62,7 +62,7 @@ def read_xml_string(input_string):
         logging.info("type of input_string: {}".format(type(input_string)))
         logging.info("head 100 of bytes: {}".format(input_string[:100]))
         logging.info("tail 100 of bytes: {}".format(input_string[-100:]))
-        with open("/tmp/pubmed.xml", 'w') as fw:
+        with open("/tmp/pubmed.xml", 'wb') as fw:
             fw.write(input_string)
         bytes_io_input_string = BytesIO(input_string)
         logging.info("string transformed into bytes")
