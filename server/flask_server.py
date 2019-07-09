@@ -50,6 +50,7 @@ def parse_pubmed():
         else:
             return json.dumps(pubmed_rows)
     else:
+        # TODO: sync
         for row_num, row in enumerate(pubmed_rows, start=1):
             if size_limit != -1 and row_num > size_limit:
                 break
