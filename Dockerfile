@@ -13,7 +13,7 @@ RUN pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt
 
 COPY . /pubmed_parser
 
-ENTRYPOINT [ "python3" ]
+#ENTRYPOINT [ "python3" ]
 
-CMD [ "-m", "server.flask_server" ]
+#CMD [ "-m", "server.flask_server" ]
 
