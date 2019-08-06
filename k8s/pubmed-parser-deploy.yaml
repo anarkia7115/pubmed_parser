@@ -19,7 +19,7 @@ spec:
       - name: imagepull-secret
       containers:
       - name: pubmed-parser
-        image: $HW_IMAGE_PREFIX/pubmed_parser:0.1.19
+        image: $HW_IMAGE_PREFIX/pubmed_parser:0.1
         command: ["python3", "-m", "server.kafka_consumer", "kafka:9092", "gzfiles", "pubmeds"]
         resources:
           limits:
