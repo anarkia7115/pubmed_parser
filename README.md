@@ -11,8 +11,10 @@
 
 ## Kafka input
 Input topic: gzfiles
+Input format: { "path": "pubmed_baseline/pubmed19n0971.xml.gz", "limit": 10 }
 
 ## Kafka output
 Output topic: pubmeds
+Output format: JsonLines
 
 
