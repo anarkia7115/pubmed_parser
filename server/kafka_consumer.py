@@ -64,8 +64,8 @@ class Consumer:
         # get value from dict by key
         try:
             pubmed_path = request['path']
-            ak = request['ak']
-            sk = request['sk']
+            # ak = request['ak']
+            # sk = request['sk']
         except KeyError as e:
             logging.info("ERROR: key:{} not found".format(e))
             return error_return
@@ -74,7 +74,7 @@ class Consumer:
         size_limit = request.get('limit', -1)
 
         try:
-            pubmed_rows = self.pr_parser.parse(pubmed_path, ak, sk)
+            pubmed_rows = self.pr_parser.parse(pubmed_path)
         except Exception as e:
             logging.info("ERROR: \n{}".format(e))
             return error_return

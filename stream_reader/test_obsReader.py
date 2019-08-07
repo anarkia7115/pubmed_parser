@@ -8,8 +8,6 @@ config.read("config.ini")
 
 class TestObsReader(TestCase):
     def setUp(self) -> None:
-        ak = ""
-        sk = ""
         self.obs_reader = obs_reader.ObsReader()
 
     def test_read_chunk(self):
