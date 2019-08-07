@@ -10,7 +10,7 @@ class TestObsReader(TestCase):
     def setUp(self) -> None:
         ak = ""
         sk = ""
-        self.obs_reader = obs_reader.ObsReader(ak, sk)
+        self.obs_reader = obs_reader.ObsReader()
 
     def test_read_chunk(self):
         one_pubmed_gz_obs = config['PATHS']['one_pubmed_gz_obs_key']
