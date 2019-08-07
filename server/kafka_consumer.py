@@ -2,6 +2,13 @@ import json
 import threading, multiprocessing
 from kafka import KafkaConsumer, KafkaProducer
 
+import configparser
+import logging
+logging.basicConfig(level=logging.INFO)
+
+config = configparser.ConfigParser()
+config.read("config.ini")
+
 
 class Producer:
     def __init__(self, bootstrap_server, pubmeds_topic):
@@ -50,8 +57,8 @@ class Consumer:
         try:
             request = json.loads(json_str)
         except json.decoder.JSONDecodeError as e:
-            print("parsing: {}".format(json_str))
-            print("ERROR: {}".format(e))
+            logging.info("parsing: {}".format(json_str))
+            logging.info("ERROR: {}".format(e))
             return error_return
 
         # get value from dict by key
@@ -60,7 +67,7 @@ class Consumer:
             ak = request['ak']
             sk = request['sk']
         except KeyError as e:
-            print("ERROR: key:{} not found".format(e))
+            logging.info("ERROR: key:{} not found".format(e))
             return error_return
 
         #callback = request.get_json().get('callback')
@@ -69,7 +76,7 @@ class Consumer:
         try:
             pubmed_rows = self.pr_parser.parse(pubmed_path, ak, sk)
         except Exception as e:
-            print("ERROR: \n{}".format(e))
+            logging.info("ERROR: \n{}".format(e))
             return error_return
         if size_limit != -1:
             return [json.dumps(xx) for xx in pubmed_rows[:size_limit]]
@@ -79,7 +86,7 @@ class Consumer:
     def start_consuming(self):
         self.consumer.subscribe([self.topic])
 
-        print("consuming: listening to {}".format(self.topic))
+        logging.info("consuming: listening to {}".format(self.topic))
         while True:
             for record in self.consumer:
                 json_str = record.value.decode('utf-8')
