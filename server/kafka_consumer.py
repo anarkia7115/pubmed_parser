@@ -32,7 +32,8 @@ class Consumer:
         self.consumer = KafkaConsumer(
             bootstrap_servers=bootstrap_server,
             auto_offset_reset='earliest',
-            consumer_timeout_ms=1000)
+            consumer_timeout_ms=1000,
+            group_id=config["KAFKA"]["group_id"])
         self.topic = gz_files_topic
 
     def stop(self):
