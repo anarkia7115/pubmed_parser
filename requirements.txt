@@ -5,3 +5,4 @@ twisted
 six
 boto3
 flask
+kafka
