@@ -1,6 +1,6 @@
-import json
 import threading, multiprocessing
 from kafka import KafkaConsumer, KafkaProducer
+from stream_parser.request_processor import Processor
 
 import configparser
 import logging
@@ -25,8 +25,7 @@ class Producer:
 
 class Consumer:
     def __init__(self, producer: Producer, bootstrap_server, gz_files_topic):
-        from stream_parser.pubmed_row_parser import PubmedRowParser
-        self.pr_parser = PubmedRowParser()
+        self.request_processor = Processor()
         self.stop_event = multiprocessing.Event()
         self.producer = producer
         self.consumer = KafkaConsumer(
@@ -39,51 +38,6 @@ class Consumer:
     def stop(self):
         self.consumer.close()
 
-    def parse_pubmed(self, json_str):
-        """
-        curl --header "Content-Type: application/json" \
-          --request POST \
-          --data '{ "path": "pubmed_baseline/pubmed19n0971.xml.gz", "limit": 10 }' \
-          http://localhost:5000/parse_pubmed
-
-        1. read json, get obs path
-        2. use read_obs_line to read gz stream
-        3. parse stream to pubmed parser
-
-        :return:
-        """
-
-        error_return = ["[ERROR]json decode error"]
-        # decode json
-        try:
-            request = json.loads(json_str)
-        except json.decoder.JSONDecodeError as e:
-            logging.info("parsing: {}".format(json_str))
-            logging.info("ERROR: {}".format(e))
-            return error_return
-
-        # get value from dict by key
-        try:
-            pubmed_path = request['path']
-            # ak = request['ak']
-            # sk = request['sk']
-        except KeyError as e:
-            logging.info("ERROR: key:{} not found".format(e))
-            return error_return
-
-        #callback = request.get_json().get('callback')
-        size_limit = request.get('limit', -1)
-
-        try:
-            pubmed_rows = self.pr_parser.parse(pubmed_path)
-        except Exception as e:
-            logging.info("ERROR: \n{}".format(e))
-            return error_return
-        if size_limit != -1:
-            return [json.dumps(xx) for xx in pubmed_rows[:size_limit]]
-        else:
-            return [json.dumps(xx) for xx in pubmed_rows]
-
     def start_consuming(self):
         self.consumer.subscribe([self.topic])
 
@@ -91,9 +45,9 @@ class Consumer:
         while True:
             for record in self.consumer:
                 json_str = record.value.decode('utf-8')
-                output_str_list = self.parse_pubmed(json_str)
+                output_str_gen = self.request_processor.parse_pubmed(json_str)
                 #output_str = "processed " + str(record)
-                for output_str in output_str_list:
+                for output_str in output_str_gen:
                     self.producer.send_result(output_str)
 
                 self.consumer.commit()
