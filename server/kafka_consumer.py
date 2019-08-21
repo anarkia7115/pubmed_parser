@@ -32,6 +32,7 @@ class Consumer:
             bootstrap_servers=bootstrap_server,
             auto_offset_reset='earliest',
             consumer_timeout_ms=1000,
+            max_poll_records=1,
             group_id=config["KAFKA"]["group_id"])
         self.topic = gz_files_topic
 
