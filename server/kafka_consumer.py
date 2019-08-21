@@ -96,6 +96,8 @@ class Consumer:
                 for output_str in output_str_list:
                     self.producer.send_result(output_str)
 
+                self.consumer.commit()
+
 
 if __name__ == "__main__":
     import sys
