@@ -32,6 +32,7 @@ class Consumer:
             bootstrap_servers=bootstrap_server,
             auto_offset_reset='latest',
             consumer_timeout_ms=60000,  # max 'job run time'/'before next pool' for consumer?
+            session_timeout_ms=60111,  # max 'job run time'/'before next pool' for consumer?
             # if timeout, reassign to another consumer
             max_poll_records=1,
             group_id=config["KAFKA"]["group_id"])
