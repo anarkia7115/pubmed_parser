@@ -30,8 +30,9 @@ class Consumer:
         self.producer = producer
         self.consumer = KafkaConsumer(
             bootstrap_servers=bootstrap_server,
-            auto_offset_reset='earliest',
-            consumer_timeout_ms=1000,
+            auto_offset_reset='latest',
+            consumer_timeout_ms=60000,  # max 'job run time'/'before next pool' for consumer?
+            # if timeout, reassign to another consumer
             max_poll_records=1,
             group_id=config["KAFKA"]["group_id"])
         self.topic = gz_files_topic
